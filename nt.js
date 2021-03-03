@@ -52,8 +52,51 @@ function fac(n) {
 }
 
 
+
+function baseRepr(n, base) {
+	let i = 0;
+	while (base ** i < n)
+		i++;		
+	const ret = new Array(i);
+	for (; i >= 0 && n; i--) {
+		ret[i] = n % base;
+		n = Math.floor(n / base);
+	}
+	 
+	return ret;
+}
+
+
+const baseLiteral = (n, b) => baseRepr(n,b)
+	.map(n => String([0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'][n] || n))
+	.join(b > 16 ? '-' : '');
+
+
+// Binary exponentiation
+function pow(x, n, m) {
+	console.log(`${x} ** ${n} = ${x} ** 0b${baseLiteral(n, 2)}:`)
+	let r = 1;
+	let y = x;
+	const isBigInt = typeof x === 'bigint';
+	let p = 1
+	while (n > 1) {
+		if (n % 2 != 0) {
+			console.log(`${(r * y) % m } = ${r} * ${y} (mod ${m}) `);
+			r = (r * y) % m;
+		}
+		n = isBigInt ? n / 2 : Math.floor(n/2);
+		y = (y * y) % m;
+		p *= 2;
+		console.log(`${y} = ${x} ** ${p} (mod ${m})`);
+	}
+	console.log(`${n}:\t${(r * y) % m } = ${r} * ${y} (mod ${m}) `);
+	r = (r * y) % m;
+	return r;
+}
+
 // put all this bs into Math.nt
 module.exports = Math.nt = {
 	genPrimes, isPrime, p, gcd, 
-	lcm, fac,
+	lcm, fac, 
+	baseLiteral, baseRepr, pow
 };
