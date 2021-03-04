@@ -27,17 +27,21 @@ function isPrime(n) {
 	return true;
 }
 
-
 // n'th prime number
 function p(n, primes) {
 	return (primes || genPrimes(2 ** ((2 ** n) - 1)))[n];
 }
 
-
 // Greatest common denominator
 function gcd(a, b) {
 	r = a%b;
 	return r? gcd(b,r) : b;
+}
+
+function eucAlg(a,b){
+	r = a%b;
+	console.log(`${a} = ${Math.floor(a/b)} * ${b} + ${r}`);
+	return r? eucAlg(b,r) : b;
 }
 
 // Least common multiple
@@ -97,6 +101,7 @@ function pow(x, n, m) {
 // put all this bs into Math.nt
 module.exports = Math.nt = {
 	genPrimes, isPrime, p, gcd, 
+	eucAlg,
 	lcm, fac, 
 	baseLiteral, baseRepr, pow
 };
