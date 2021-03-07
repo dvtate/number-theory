@@ -44,6 +44,25 @@ function eucAlg(a,b){
 	return r? eucAlg(b,r) : b;
 }
 
+function extEuc(a, b) {
+	let [old_r, r] = [a, b];
+	let [old_s, s] = [1n, 0n];
+    let [old_t, t] = [0n, 1n];
+    
+    while (r != 0) {
+    	const q = old_r / r;
+    	[old_r, r] = [r, old_r - q * r];
+    	[old_s, s] = [s, old_s - q * s];
+    	[olt_t, t] = [t, old_t - q * t];    
+	}
+	
+	return {
+		bezout: [old_s, old_t],
+		gcd: old_r,
+		quots: [t,s],
+	};
+}
+
 // Least common multiple
 function lcm(a, b) {
 	return a * b / gcd(a, b);
@@ -101,7 +120,7 @@ function pow(x, n, m) {
 // put all this bs into Math.nt
 module.exports = Math.nt = {
 	genPrimes, isPrime, p, gcd, 
-	eucAlg,
+	eucAlg, extEuc,
 	lcm, fac, 
 	baseLiteral, baseRepr, pow
 };
