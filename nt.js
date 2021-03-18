@@ -19,9 +19,7 @@ function genPrimes(end) {
 
 // Test primality
 function isPrime(n) {
-	n = BigInt(n);
-	const cap = BigInt(Math.sqrt(n));
-	for (let i = 2n; i <= cap; i++)
+	for (let i = 2n; i <= n; i++)
 		if (n % i == 0n)
 			return false;
 	return true;
