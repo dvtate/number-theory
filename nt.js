@@ -69,7 +69,9 @@ function lcm(a, b) {
 
 // Factorial
 function fac(n) { 
-	return n > 1n ? n * Math.factorial(n-1n) : 1n; 
+	return typeof n == 'bigint'
+		? n > 1n ? n * fac(n - 1n) : 1n
+		: n > 1 ? n * fac(n - 1) : 1;
 }
 
 
